@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -8,6 +9,7 @@ using Taxi.Web.Data.Entities;
 
 namespace Taxi.Web.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class TaxisController : Controller
     {
         private readonly DataContext _context;
@@ -68,7 +70,7 @@ namespace Taxi.Web.Controllers
                 {
                     if (ex.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Already exists a taxi whit the sampe plaque");
+                        ModelState.AddModelError(string.Empty, "Already exists a taxi with the same  plaque");
                     }
                     else
                     {
@@ -121,7 +123,7 @@ namespace Taxi.Web.Controllers
                 {
                     if (ex.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Already exists a taxi whit the sampe plaque");
+                        ModelState.AddModelError(string.Empty, "Already exists a taxi with the same  plaque");
                     }
                     else
                     {
